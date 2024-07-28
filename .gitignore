@@ -53,3 +53,4 @@ app.*.map.json
 pubspec.lock
 test/widget_test.dart
 analysis_options.yaml
+.VS/
