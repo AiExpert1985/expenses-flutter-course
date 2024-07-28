@@ -23,6 +23,8 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
+  void _showDatePicker() {}
+
   void saveNewExpense() {
     widget.onSave(
       Expense(
@@ -47,13 +49,27 @@ class _NewExpenseState extends State<NewExpense> {
               label: Text('title'),
             ),
           ),
-          TextField(
-            controller: _amountController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              prefixText: '\$',
-              label: Text('amount'),
-            ),
+          Row(
+            children: [
+              TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  prefixText: '\$',
+                  label: Text('amount'),
+                ),
+              ),
+              const SizedBox(width: 15),
+              Row(
+                children: [
+                  const Text('Date to be added'),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.calendar_month),
+                  )
+                ],
+              )
+            ],
           ),
           Row(
             children: [
