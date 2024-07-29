@@ -23,7 +23,14 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-  void _showDatePicker() {}
+  void _showDatePicker() {
+    DateTime currentDate = DateTime.now();
+    showDatePicker(
+      context: context,
+      firstDate: currentDate,
+      lastDate: DateTime(currentDate.year + 1, currentDate.month, currentDate.day),
+    );
+  }
 
   void saveNewExpense() {
     widget.onSave(
@@ -64,7 +71,7 @@ class _NewExpenseState extends State<NewExpense> {
                 children: [
                   const Text('Date to be added'),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: _showDatePicker,
                     icon: const Icon(Icons.calendar_month),
                   )
                 ],
