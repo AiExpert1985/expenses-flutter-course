@@ -25,11 +25,12 @@ class _NewExpenseState extends State<NewExpense> {
 
   void _showDatePicker() {
     DateTime currentDate = DateTime.now();
-    showDatePicker(
-      context: context,
-      firstDate: currentDate,
-      lastDate: DateTime(currentDate.year + 1, currentDate.month, currentDate.day),
-    );
+    // showDatePicker(
+    //   context: context,
+    //   firstDate: currentDate,
+    //   lastDate:
+    //       DateTime(currentDate.year + 1, currentDate.month, currentDate.day),
+    // );
   }
 
   void saveNewExpense() {
@@ -42,6 +43,11 @@ class _NewExpenseState extends State<NewExpense> {
       ),
     );
   }
+
+  // @override
+  // Widget build(Object context) {
+  //   return const Text('hi');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,23 +64,27 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           Row(
             children: [
-              TextField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  prefixText: '\$',
-                  label: Text('amount'),
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    prefixText: '\$',
+                    label: Text('amount'),
+                  ),
                 ),
               ),
               const SizedBox(width: 15),
-              Row(
-                children: [
-                  const Text('Date to be added'),
-                  IconButton(
-                    onPressed: _showDatePicker,
-                    icon: const Icon(Icons.calendar_month),
-                  )
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    const Text('Date to be added'),
+                    IconButton(
+                      onPressed: _showDatePicker,
+                      icon: const Icon(Icons.calendar_month),
+                    )
+                  ],
+                ),
               )
             ],
           ),
