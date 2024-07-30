@@ -30,7 +30,7 @@ class _NewExpenseState extends State<NewExpense> {
 
   void _showDatePicker() async {
     DateTime currentDate = DateTime.now();
-    final selected_date = await showDatePicker(
+    final selectedDate = await showDatePicker(
       context: context,
       firstDate:
           DateTime(currentDate.year - 1, currentDate.month, currentDate.day),
@@ -38,7 +38,7 @@ class _NewExpenseState extends State<NewExpense> {
           DateTime(currentDate.year + 1, currentDate.month, currentDate.day),
     );
     setState(() {
-      _selectedDate = selected_date;
+      _selectedDate = selectedDate;
     });
   }
 
