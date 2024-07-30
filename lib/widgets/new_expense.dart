@@ -1,5 +1,9 @@
 import 'package:expenses/models/expense.dart';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+final dateFormater = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
   const NewExpense({required this.onSave, super.key});
@@ -15,6 +19,7 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   @override
   void dispose() {
@@ -23,14 +28,18 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-  void _showDatePicker() {
+  void _showDatePicker() async {
     DateTime currentDate = DateTime.now();
-    // showDatePicker(
-    //   context: context,
-    //   firstDate: currentDate,
-    //   lastDate:
-    //       DateTime(currentDate.year + 1, currentDate.month, currentDate.day),
-    // );
+    final selected_date = await showDatePicker(
+      context: context,
+      firstDate:
+          DateTime(currentDate.year - 1, currentDate.month, currentDate.day),
+      lastDate:
+          DateTime(currentDate.year + 1, currentDate.month, currentDate.day),
+    );
+    setState(() {
+      _selectedDate = selected_date;
+    });
   }
 
   void saveNewExpense() {
@@ -39,15 +48,11 @@ class _NewExpenseState extends State<NewExpense> {
         title: _titleController.text,
         amount: double.tryParse(_amountController.text)!,
         category: Category.food,
-        date: DateTime.now(),
+        date: _selectedDate!,
       ),
     );
+    dispose();
   }
-
-  // @override
-  // Widget build(Object context) {
-  //   return const Text('hi');
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +82,14 @@ class _NewExpenseState extends State<NewExpense> {
               const SizedBox(width: 15),
               Expanded(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Date to be added'),
+                    Text(
+                      _selectedDate == null
+                          ? "No date selected"
+                          : dateFormater.format(_selectedDate!),
+                    ),
                     IconButton(
                       onPressed: _showDatePicker,
                       icon: const Icon(Icons.calendar_month),
