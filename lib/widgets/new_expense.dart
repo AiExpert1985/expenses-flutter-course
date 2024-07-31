@@ -43,7 +43,37 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  bool isValidInput() {
+    bool isValid = true;
+    final enteredAmount = double.tryParse(_amountController
+        .text); // tryParse('Hello') => null, tryParse('1.12') => 1.12
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      isValid = false;
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid input'),
+          content: const Text(
+              'Please make sure a valid title, amount, date and category was entered.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+    }
+    return isValid;
+  }
+
   void saveNewExpense() {
+    if(!isValidInput()) return;
     widget.onSave(
       Expense(
         title: _titleController.text,
@@ -52,13 +82,13 @@ class _NewExpenseState extends State<NewExpense> {
         date: _selectedDate!,
       ),
     );
-    dispose();
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16, 46, 16, 16),
       child: Column(
         children: [
           TextField(
